@@ -1,5 +1,5 @@
 #include "graph.cpp"
-#include "createtxtfile.cpp"
+#include "createedges.cpp"
 #include <string>
 
 using namespace std;

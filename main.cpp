@@ -1,11 +1,18 @@
 #include "graph.cpp"
+#include "createtxtfile.cpp"
+#include <string>
 
 using namespace std;
 
 int main()
 {
+    match("testando", "matheus", 2);
+    string pieces;
+    int numPieces, minSize, maxSize;
     int numVertices, numEdges;
-      
+    int edgeParam;
+
+
     cout << "Enter the Number of Vertices" << endl;
     cin >> numVertices;
       

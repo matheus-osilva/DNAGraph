@@ -1,6 +1,4 @@
-#include <iostream>
-#include <vector>
-#include <random>
+#include "dna.h"
 
 template<typename T>
 T random(T range_from, T range_to) {

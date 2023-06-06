@@ -1,25 +1,21 @@
-#define vertex int
+#include <iostream>
+#include <string>
+#include <unordered_map>
+#include <unordered_set>
+#include <list>
+#include <queue>
 
-//Representação por adjacência foi escolhida pela maior eficiência em grafos esparsos. Checar se o grafo de DNA é mais esparso.
+using namespace std;
 
-/* A lista de adjacência de um vértice v é composta por nós do tipo node. 
-Cada nó da lista corresponde a um arco e contém um vizinho w de v e o
-endereço do nó seguinte da lista. Um link é um ponteiro para um node. */
-typedef struct node *link;
-struct node { 
-   vertex w; 
-   link next; 
-};
+typedef string vertex; //the label of this vertex
 
-/* REPRESENTAÇÃO POR LISTAS DE ADJACÊNCIA: A estrutura graph representa um grafo. 
-O campo adj é um ponteiro para o vetor de listas de adjacência, o campo V contém 
-o número de vértices e o campo A contém o número de arcos do grafo. */
-struct graph {
-   int V; 
-   int A; 
-   link *adj; 
-};
-typedef struct graph *Graph;
-/* Um Graph é um ponteiro para um graph. */
+typedef vertex edge; //edge contains destination vertex
 
+typedef unordered_map<vertex, list<edge>> graph; //graph is for each source vertex, list of adjacent (destination) vertices
 
+typedef pair<vertex, queue<vertex>> path; //we use this to track the path followed from a given vertex while going to the destination
+
+//functions
+void add_edge(graph& g, vertex source, vertex dest);
+void print_graph(graph& g);
+path find_path(graph& g, vertex start, vertex end);

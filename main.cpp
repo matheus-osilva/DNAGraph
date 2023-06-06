@@ -1,33 +1,50 @@
 #include "graph.cpp"
-#include <iostream>
-#include <fstream>
+#include "createtxtfile.cpp"
 #include <string>
-#include <sstream>
-#include <vector>
 
-int main(){
-    std::string filePath = R"(/home/bmac/matheusnz/Documentos/ep3demac0323/example.txt)";
-    std::ifstream inputFile(filePath);
-    std::vector<int> vec;
-    int vertNum;
-    int edgeNum;
-    if (!inputFile.is_open()) {
-        std::cout << "Falha ao abrir o arquivo de texto" << std::endl;
-        return 1;
+using namespace std;
+
+int main()
+{
+    match("testando", "matheus", 2);
+    string pieces;
+    int numPieces, minSize, maxSize;
+    int numVertices, numEdges;
+    int edgeParam;
+
+
+    cout << "Enter the Number of Vertices" << endl;
+    cin >> numVertices;
+      
+    cout << "Enter the Number of Edges" << endl;
+    cin >> numEdges;
+    
+    //initialize empty graph for our vertices
+    graph g(numVertices);
+    
+    vertex source, dest;
+    
+    //add edges and create vertices as needed  
+    for (int i = 0; i < numEdges; i++) {
+        cout << "Enter the source vertex" << endl;
+        cin >> source;
+        cout << "Enter the destination vertex" << endl;
+        cin >> dest;
+        add_edge(g, source, dest);
     }
-    std::string line;
-    while (std::getline(inputFile, line)) {
-        std::stringstream ss(line);
-        std::string word;
-        while (ss >> word) {
-            int number = stoi(word);
-            vec.push_back(number);
-        }
-    }
-    vertNum = vec[0];
-    edgeNum = vec[1];
-    Graph graph = GRAPHinit(vec[0]);
-    for (int i = 3; i < edgeNum; ++i){
-        GRAPHinsertArc(graph, vec[i], vec[i+1]);
-    }
+    
+    cout << "The Adjacency List is:" << endl;
+    print_graph(g);
+      
+    cout << "Enter the start vertex" << endl;
+    cin >> source;
+      
+    cout << "Enter the end vertex" << endl;
+    cin >> dest;
+    
+    path p = find_path(g, source, dest);
+    
+    print_path(p);
+     
+    return 0;
 }

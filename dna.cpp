@@ -30,7 +30,8 @@ std::vector<std::string> splitdna(std::string sequence, int N, int B, int E){
 
 
 
-int main(){
+
+/*int main(){
     std::vector<std::string> splited_sequence;
     std::string key = "testando a separacao de string";
     int B = 4;
@@ -40,4 +41,4 @@ int main(){
         std::cout << splited_sequence[i] << std::endl;
     }
     return 0;
-}
+}*/

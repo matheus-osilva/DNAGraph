@@ -11,16 +11,20 @@ T random(T range_from, T range_to) {
 //takes a string which represents a dna sequence and break it in N pieces, the piece's size is in the interval [B,E]
 std::vector<std::string> splitdna(std::string sequence, int N, int B, int E){
     std::vector<std::string> splited;
+    std::string word;
     int index;
     int psize;
     int minIndex;
-    for (int i = 0; i < N; i++)
+    while(splited.size() != N)
     {
+        std::cout << "tamanho: " << splited.size() << "  N: " << N << std::endl;
         psize = random(B, E);
         minIndex = sequence.size() - psize;
         index = random(0, minIndex);
-        std::cout << sequence.substr(index, psize) << std::endl;
-        splited.push_back(sequence.substr(index, psize));
+        if (std::find(splited.begin(), splited.end(), sequence.substr(index, psize)) == splited.end()){
+            splited.push_back(sequence.substr(index, psize));
+        }
+        
     }
     return splited;
 }

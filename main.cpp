@@ -41,6 +41,11 @@ int main()
 
     //initialize empty graph for our vertices
     graph g(numVertices);
+    for (int i = 0; i < numVertices; i++)
+    {
+        g[pieces[i]].clear();
+    }
+    
     
     vertex source, dest;
     

@@ -19,9 +19,8 @@ std::vector<std::string> splitdna(std::string sequence, int N, int B, int E){
         psize = random(B, E);
         minIndex = sequence.size() - psize;
         index = random(0, minIndex);
-        std::cout << index << ", " << psize << std::endl;
+        std::cout << sequence.substr(index, psize) << std::endl;
         splited.push_back(sequence.substr(index, psize));
-        std::cout << "tamanho do pedaco: " << (sequence.substr(index, psize)).size() << std::endl;
     }
     return splited;
 }

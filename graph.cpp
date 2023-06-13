@@ -2,7 +2,6 @@
 
 void add_edge(graph& g, vertex source, vertex dest){
     g[source].push_back(dest);
-    g[dest].push_back(source);
 }
 
 //shows adjacency list for the given graph

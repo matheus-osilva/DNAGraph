@@ -27,7 +27,7 @@ bool match(string one, string two, int edgeParam){
     return false;
 }
 
-string createfile(vector<string> pieces, int edgeParam){
+void createfile(vector<string> pieces, int edgeParam){
     string text;
     stringstream aux;
     string aux2;
@@ -58,5 +58,7 @@ string createfile(vector<string> pieces, int edgeParam){
         text.append(edges[i+1]);
         text.append("\n");
     }
-    cout << text << endl;
+    ofstream file("edges.txt");
+    file << text;
+    file.close();
 }

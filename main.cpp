@@ -1,35 +1,55 @@
 #include "graph.cpp"
 #include "createedges.cpp"
+#include "dna.cpp"
 #include <string>
 
 using namespace std;
 
 int main()
 {
-    match("testando", "matheus", 2);
-    string pieces;
-    int numPieces, minSize, maxSize;
+    string sequence;
+    vector<string> pieces;
+    int numPieces, minSize, maxSize, edgeParam;
+    /*cout << "Enter the DNA sequence: " << endl;
+    cin >> sequence;
+    cout << "Enter the number of pieces the sequence will be splitted: " << endl;
+    cin >> numPieces;
+    cout << "Enter the minimum size of each piece: " << endl;
+    cin >> minSize;
+    cout << "Enter the maximum size of each piece: " << endl;
+    cin >> maxSize;
+    cout << "Enter the parameter to build the edges (k): " << endl;
+    cin >> edgeParam;
+    */
+    sequence = "ACTCGTAAATACATAACGATAC";
+    numPieces = 12;
+    minSize = 4;
+    maxSize = 6;
+    edgeParam = 2;
+
+    pieces = splitdna(sequence, numPieces, minSize, maxSize);
+    createfile(pieces, edgeParam);
+
+    string myText;
+    string myWord;
     int numVertices, numEdges;
-    int edgeParam;
+    numVertices = numPieces;
+    ifstream MyReadFile("edges.txt");
+    getline(MyReadFile, myText);
+    myWord = myText.substr(myText.find(" "), myText.find("/") - 1);
+    numEdges = stoi(myWord);
 
-
-    cout << "Enter the Number of Vertices" << endl;
-    cin >> numVertices;
-      
-    cout << "Enter the Number of Edges" << endl;
-    cin >> numEdges;
-    
     //initialize empty graph for our vertices
     graph g(numVertices);
     
     vertex source, dest;
     
+
     //add edges and create vertices as needed  
     for (int i = 0; i < numEdges; i++) {
-        cout << "Enter the source vertex" << endl;
-        cin >> source;
-        cout << "Enter the destination vertex" << endl;
-        cin >> dest;
+        getline(MyReadFile, myText);
+        source = myText.substr(0, myText.find(" "));
+        dest = myText.substr(myText.find(" ") + 1, myText.find("\n"));
         add_edge(g, source, dest);
     }
     
@@ -45,6 +65,6 @@ int main()
     path p = find_path(g, source, dest);
     
     print_path(p);
-     
+
     return 0;
 }

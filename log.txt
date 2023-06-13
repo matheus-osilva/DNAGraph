@@ -1,0 +1,2 @@
+13/06/2023
+A função splitdna pode gerar pedaços iguais dependendo do tamanho da sequência e da quantidade de pedaços escolhida. Portanto, na hora de criar o arquivo edges.txt repete os arcos para cada pedaço igual, e portanto a entrada numVertices representa o número máximo possível de vértices, porém pode haver menos vértices.

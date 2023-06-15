@@ -61,6 +61,7 @@ int main()
     cout << "The Adjacency List is:" << endl;
     print_graph(g);
       
+    /*
     cout << "Enter the start vertex" << endl;
     cin >> source;
       
@@ -70,6 +71,9 @@ int main()
     path p = find_path(g, source, dest);
     
     print_path(p);
+    */
+   
+    checkEdgesInCircuit(g);
 
     return 0;
 }

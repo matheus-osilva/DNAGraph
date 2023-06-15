@@ -111,3 +111,41 @@ void print_path(path p){
       
     }
 }
+
+bool dfs(const graph& myGraph, const vertex& currentVertex, const vertex& targetVertex, std::unordered_set<vertex>& visitedVertices) {
+    if (currentVertex == targetVertex)
+        return true;
+
+    visitedVertices.insert(currentVertex);
+    const auto& adjacentVertices = myGraph.at(currentVertex);
+
+    for (const auto& adjacentVertex : adjacentVertices) {
+        if (visitedVertices.find(adjacentVertex) == visitedVertices.end()) {
+            if (dfs(myGraph, adjacentVertex, targetVertex, visitedVertices))
+                return true;
+        }
+    }
+
+    visitedVertices.erase(currentVertex);
+    return false;
+}
+
+bool isCircuitPresent(const graph& myGraph, const vertex& startVertex, const vertex& targetVertex) {
+    std::unordered_set<vertex> visitedVertices;
+    return dfs(myGraph, startVertex, targetVertex, visitedVertices);
+}
+
+void checkEdgesInCircuit(const graph& myGraph) {
+    for (const auto& vertexPair : myGraph) {
+        vertex currentVertex = vertexPair.first;
+        const auto& adjacentVertices = vertexPair.second;
+
+        for (const auto& adjacentVertex : adjacentVertices) {
+            if (isCircuitPresent(myGraph, adjacentVertex, currentVertex)) {
+                std::cout << "Edge: " << currentVertex << " -> " << adjacentVertex << " is in a circuit." << std::endl;
+            } else {
+                std::cout << "Edge: " << currentVertex << " -> " << adjacentVertex << " is not in a circuit." << std::endl;
+            }
+        }
+    }
+}

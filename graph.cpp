@@ -1,7 +1,7 @@
 #include "graph.h"
 
 void add_edge(graph& g, vertex source, vertex dest){
-    g[source].push_back(dest);
+  g[source].push_back(dest);
 }
 
 //shows adjacency list for the given graph
@@ -25,8 +25,8 @@ void print_graph(graph& g){
 //finds and returns (if existing) the shortest path from start to end.
 path find_path(graph& g, vertex start, vertex end){
 
-  //track vertices already visited, if we go back to them it is either a loop or not the shortest path, so we can ignore them the second time
-  unordered_set<vertex> visited(g.size()); //at most we visit each vertex once
+  //track vertices already visited, if we go back to them, it is either a loop or not the shortest path, so we can ignore them the second time
+  unordered_set<vertex> visited(g.size()); //at most, we visit each vertex once
   
   //we will do BFS and follow each path from the source, tracking what we did
   queue<path> q;
@@ -63,7 +63,7 @@ path find_path(graph& g, vertex start, vertex end){
     //if we reach the destination, return the path we took, which will be the shortest
     
     //continue walking from the last place we arrived in the current path
-    for(edge nextVertex : g[p.second.back()]){
+    for(const edge& nextVertex : g[p.second.back()]){
     
       //if we did not visit this yet
       if(visited.find(nextVertex) == visited.end()){
@@ -89,14 +89,22 @@ path find_path(graph& g, vertex start, vertex end){
     }
   }
   
-  //if we reached this place, the queue is now empty and we have no more vertices to visit, but also did not reach the destination, so return empty
+  //if we reached this place, the queue is now empty, and we have no more vertices to visit, but also did not reach the destination, so return empty
   queue<vertex> empty;
   return make_pair("", empty);
 
 }
 
-void print_path(path p){
-    if(p.first == ""){
+void removeEdge(graph myGraph, const vertex& sourceVertex, const edge& destinationVertex) {
+    auto it = myGraph.find(sourceVertex);
+    if (it != myGraph.end()) {
+        std::list<edge>& adjacentVertices = it->second;
+        adjacentVertices.remove(destinationVertex);
+    }
+}
+
+void print_path(const path& p){
+    if(p.first.empty()){
       cout << "No path found";
     } else {
       queue<vertex> path_to_dest = p.second;
@@ -108,24 +116,18 @@ void print_path(path p){
         cout << path_to_dest.front() << endl;
         path_to_dest.pop();
       }
-      
     }
 }
 
 bool dfs(const graph& myGraph, const vertex& currentVertex, const vertex& targetVertex, std::unordered_set<vertex>& visitedVertices) {
-    if (currentVertex == targetVertex)
-        return true;
-
+    if (currentVertex == targetVertex) return true;
     visitedVertices.insert(currentVertex);
     const auto& adjacentVertices = myGraph.at(currentVertex);
-
     for (const auto& adjacentVertex : adjacentVertices) {
         if (visitedVertices.find(adjacentVertex) == visitedVertices.end()) {
-            if (dfs(myGraph, adjacentVertex, targetVertex, visitedVertices))
-                return true;
+            if (dfs(myGraph, adjacentVertex, targetVertex, visitedVertices)) return true;
         }
     }
-
     visitedVertices.erase(currentVertex);
     return false;
 }
@@ -143,6 +145,7 @@ void checkEdgesInCircuit(const graph& myGraph) {
         for (const auto& adjacentVertex : adjacentVertices) {
             if (isCircuitPresent(myGraph, adjacentVertex, currentVertex)) {
                 std::cout << "Edge: " << currentVertex << " -> " << adjacentVertex << " is in a circuit." << std::endl;
+                removeEdge(myGraph, currentVertex, adjacentVertex);
             } else {
                 std::cout << "Edge: " << currentVertex << " -> " << adjacentVertex << " is not in a circuit." << std::endl;
             }

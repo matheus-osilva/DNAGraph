@@ -4,6 +4,8 @@
 #include <unordered_set>
 #include <list>
 #include <queue>
+#include <stack>
+#include <vector>
 
 using namespace std;
 
@@ -18,4 +20,15 @@ typedef pair<vertex, queue<vertex>> path; //we use this to track the path follow
 //functions
 void add_edge(graph& g, vertex source, vertex dest);
 void print_graph(graph& g);
+void checkEdgesInCircuit(const graph& myGraph);
 path find_path(graph& g, vertex start, vertex end);
+
+
+
+
+
+
+
+
+
+

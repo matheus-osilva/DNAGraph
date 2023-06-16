@@ -1,6 +1,6 @@
-#include "graph.cpp"
-#include "createedges.cpp"
-#include "dna.cpp"
+#include "graph.h"
+#include "createedges.h"
+#include "dna.h"
 #include <string>
 
 using namespace std;
@@ -74,6 +74,7 @@ int main()
     */
    
     checkEdgesInCircuit(g);
+    print_graph(g);
 
     return 0;
 }

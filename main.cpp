@@ -1,8 +1,8 @@
-#include "graph.h"
 #include "createedges.h"
 #include "dna.h"
-#include "Digraph.h"
 #include "SymbolGraph.h"
+//#include "DirectedCycle.h"
+#include "Digraph.h"
 #include <string>
 
 using namespace std;
@@ -32,8 +32,18 @@ int main()
     pieces = splitdna(sequence, numPieces, minSize, maxSize);
     createfile(pieces, edgeParam);
     SymbolGraph sgraph = SymbolGraph("edges.txt", " ");
-    sgraph.print();
     Digraph graph = sgraph.getGraph();
+    int counter = 1;
+    for (int v = 0; v < graph.getV(); v++) {
+        for (int w : graph.getadj(v)) {
+            DirectedCycle dc = DirectedCycle(graph);
+            cout << counter << ")  ";
+            if(dc.hasCycle()) cout << v << "->" << w << endl;
+            counter++;
+        }
+    }
+
+    sgraph.print();
     graph.print();
     /*
     string myText;

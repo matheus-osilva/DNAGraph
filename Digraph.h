@@ -3,6 +3,9 @@
 
 #include <vector>
 #include <iostream>
+#include <algorithm>
+#include <unordered_set>
+
 
 class Digraph {
 private:
@@ -19,11 +22,14 @@ public:
 
     void addEdge(int v, int w);
 
+    void removeEdge(int v, int w);
+
     std::vector<int> getadj(int v);
 
     Digraph reverse();
 
     void print();
+
 };
 
 #endif // DNAGRAPH_GRAPHS_H

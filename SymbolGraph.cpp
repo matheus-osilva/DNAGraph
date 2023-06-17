@@ -68,3 +68,9 @@ void SymbolGraph::print() {
         std::cout << i << " -> " << keys[i] << "\n";
     }
 }
+/*void SymbolGraph::removeCycles() {
+    Digraph G = getGraph();
+    for (int v = 0; v < G.getV(); ++v) {
+        DirectedCycle dc = DirectedCycle(G, v);
+    }
+}*/

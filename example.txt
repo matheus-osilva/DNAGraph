@@ -1,10 +1,48 @@
-10 10
-0 1
-1 2
-2 3
-3 4
-4 5
-5 6
-6 7
-7 8
-8 9
+class DirectedCycle
+{
+private:
+    bool *marked;
+    int *edgeTo;
+    stack<int> cycle; // vertices on a cycle (if one exists)
+    bool *onStack; // vertices on recursive call stack
+public:
+    DirectedCycle(Digraph G)
+    {
+        onStack = new bool[G.V()];
+        edgeTo = new int[G.V()];
+        marked = new bool[G.V()];
+        for (int v = 0; v < G.V(); v++)
+            if (!marked[v])
+                dfs(G, v);
+    }
+    void dfs(Digraph G, int v)
+    {
+        onStack[v] = true;
+        marked[v] = true;
+        for (int w : G.adj(v))
+            if (this->hasCycle())
+                return;
+            else if (!marked[w])
+            {
+                edgeTo[w] = v;
+                dfs(G, w);
+            }
+            else if (onStack[w])
+            {
+                cycle = stack<int>();
+                for (int x = v; x != w; x = edgeTo[x])
+                    cycle.push(x);
+                cycle.push(w);
+                cycle.push(v);
+            }
+        onStack[v] = false;
+    }
+    bool hasCycle()
+    {
+        return cycle != nullptr;
+    }
+    Iterable<int> cycle()
+    {
+        return cycle;
+    }
+};

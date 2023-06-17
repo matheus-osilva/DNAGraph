@@ -1,4 +1,6 @@
-#include "Digraph.h"
+#include "DirectedCycle.h"
+
+//Digraph functions
 
 Digraph::Digraph(int V) {
     this->V = V;
@@ -53,4 +55,45 @@ void Digraph::print() {
         }
         std::cout << "\n";
     }
+}
+
+//DirectedCycle Functions
+
+DirectedCycle::DirectedCycle(Digraph G)
+{
+    onStack = new bool[G.getV()];
+    edgeTo = new int[G.getV()];
+    marked = new bool[G.getV()];
+    for (int v = 0; v < G.getV(); v++){
+        if (!marked[v]) dfs(G, v);
+    }
+
+}
+void DirectedCycle::dfs(Digraph G, int v)
+{
+    onStack[v] = true;
+    marked[v] = true;
+    for (int w : G.getadj(v))
+        if (this->hasCycle()) return;
+        else if (!marked[w])
+        {
+            edgeTo[w] = v;
+            dfs(G, w);
+        }
+        else if (onStack[w])
+        {
+            cycle = std::stack<int>();
+            for (int x = v; x != w; x = edgeTo[x]) cycle.push(x);
+            cycle.push(w);
+            cycle.push(v);
+        }
+    onStack[v] = false;
+}
+bool DirectedCycle::hasCycle()
+{
+    return !cycle.empty();
+}
+std::stack<int> DirectedCycle::getcycle()
+{
+    return cycle;
 }

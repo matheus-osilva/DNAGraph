@@ -45,13 +45,9 @@ void createfile(vector<string> pieces, int edgeParam){
     }
     aux << numVertices;
     aux >> aux2;
-    /*text.append(aux2);
-    text.append(" ");*/
     aux.clear();
     aux << edges.size() / 2;
     aux >> aux2;
-    /*text.append(aux2);
-    text.append("\n");*/
     for (int i = 0; i < edges.size() - 1; i += 2){
         text.append(edges[i]);
         text.append(" ");

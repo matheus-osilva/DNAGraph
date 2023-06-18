@@ -1,6 +1,7 @@
-#include "graph.h"
 #include "createedges.h"
 #include "dna.h"
+#include "SymbolGraph.h"
+#include "Digraph.h"
 #include <string>
 
 using namespace std;
@@ -29,7 +30,24 @@ int main()
 
     pieces = splitdna(sequence, numPieces, minSize, maxSize);
     createfile(pieces, edgeParam);
+    SymbolGraph sgraph = SymbolGraph("edges.txt", " ");
+    Digraph graph = sgraph.getGraph();
+    graph.print();
+    int counter = 1;
+    for (int v = 0; v < graph.getV(); v++) {
+        for (int w : graph.getadj(v)) {
+            cout << counter << ")  ";
+            if(graph.isEdgeInCircuit(v, w)) {
+                cout << v << "->" << w << endl;
+                graph.removeEdge(v, w);
+            }
+            counter++;
+        }
+    }
 
+    sgraph.print();
+    graph.print();
+    /*
     string myText;
     string myWord;
     int numVertices, numEdges;
@@ -57,9 +75,9 @@ int main()
         dest = myText.substr(myText.find(" ") + 1, myText.find("\n"));
         add_edge(g, source, dest);
     }
-    
-    cout << "The Adjacency List is:" << endl;
-    print_graph(g);
+    */
+   /* cout << "The Adjacency List is:" << endl;
+    print_graph(g);*/
       
     /*
     cout << "Enter the start vertex" << endl;
@@ -73,8 +91,7 @@ int main()
     print_path(p);
     */
    
-    checkEdgesInCircuit(g);
-    print_graph(g);
-
+   /* checkEdgesInCircuit(g);
+    print_graph(g);*/
     return 0;
 }

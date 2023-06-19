@@ -12,7 +12,7 @@ int main()
     vector<string> pieces;
     int numPieces, minSize, maxSize, edgeParam;
     /*cout << "Enter the DNA sequence: " << endl;
-    cin >> sequence;
+    cin >> sequence;*/
     cout << "Enter the number of pieces the sequence will be splitted: " << endl;
     cin >> numPieces;
     cout << "Enter the minimum size of each piece: " << endl;
@@ -21,32 +21,52 @@ int main()
     cin >> maxSize;
     cout << "Enter the parameter to build the edges (k): " << endl;
     cin >> edgeParam;
-    */
-    sequence = "ACTCGTAAATACATAACGATAC";
-    numPieces = 12;
-    minSize = 4;
-    maxSize = 6;
-    edgeParam = 2;
 
+    sequence = "ACTCGTAAATACATAACGATAC";
     pieces = splitdna(sequence, numPieces, minSize, maxSize);
     createfile(pieces, edgeParam);
     SymbolGraph sgraph = SymbolGraph("edges.txt", " ");
     Digraph graph = sgraph.getGraph();
-    graph.print();
     int counter = 1;
     for (int v = 0; v < graph.getV(); v++) {
         for (int w : graph.getadj(v)) {
-            cout << counter << ")  ";
             if(graph.isEdgeInCircuit(v, w)) {
-                cout << v << "->" << w << endl;
                 graph.removeEdge(v, w);
             }
             counter++;
         }
     }
-
     sgraph.print();
     graph.print();
+    vector<vector<int>> longestPaths;
+    longestPaths.push_back(graph.longestPath(0));
+    int cont = 0;
+
+    for (int v = 1; v < graph.getV(); v++) {
+        vector<int> path = graph.longestPath(v);
+        if (path.size() > longestPaths[cont].size()) {
+            longestPaths.clear();
+            longestPaths.push_back(path);
+            cont = 0;
+        } else if (path.size() == longestPaths[cont].size()) {
+            longestPaths.push_back(path);
+            cont++;
+        }
+    }
+
+    vector<vector<string>> stringPaths;
+    stringPaths.reserve(longestPaths.size());
+    for (const auto& longestPath : longestPaths) {
+        stringPaths.push_back(sgraph.mapIntToString(longestPath));
+    }
+
+    for (const auto& path : stringPaths) {
+        for (const auto& piece : path) {
+            cout << piece;
+        }
+        cout << endl << "-----------------------------------------------------" << endl;
+    }
+
     /*
     string myText;
     string myWord;

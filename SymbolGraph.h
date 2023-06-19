@@ -17,16 +17,12 @@ private:
 
 public:
     SymbolGraph(const std::string& stream, const std::string& sp);
-
     bool contains(const std::string& s);
-
     int index(const std::string& s);
-
     std::string name(int v);
-
     Digraph getGraph();
-
     void print();
+    std::vector<std::string> mapIntToString(const std::vector<int>& intVector) const;
 };
 
 #endif // DNAGRAPH_SYMBOLGRAPH_H

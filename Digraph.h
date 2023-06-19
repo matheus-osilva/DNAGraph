@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <unordered_set>
 #include <stack>
+#include <limits>
 
 
 class Digraph {
@@ -24,6 +25,8 @@ public:
     Digraph reverse();
     void print();
     bool isEdgeInCircuit(int u, int v);
+    std::vector<int> longestPath(int s);
+    void topologicalSortUtil(int v, std::vector<bool>& visited, std::stack<int>& stack);
 };
 
 #endif // DNAGRAPH_GRAPHS_H

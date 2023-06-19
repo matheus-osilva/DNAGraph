@@ -68,6 +68,14 @@ void SymbolGraph::print() {
         std::cout << i << " -> " << keys[i] << "\n";
     }
 }
+std::vector<std::string> SymbolGraph::mapIntToString(const std::vector<int>& intVector) const {
+    std::vector<std::string> stringVector;
+    stringVector.reserve(intVector.size());
+for (int v : intVector) {
+        stringVector.push_back(keys[v]);
+    }
+    return stringVector;
+}
 /*void SymbolGraph::removeCycles() {
     Digraph G = getGraph();
     for (int v = 0; v < G.getV(); ++v) {

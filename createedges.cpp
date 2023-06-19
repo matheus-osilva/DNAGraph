@@ -6,7 +6,7 @@ int lowerSize(string one, string two){
     int lower = -1;
     if (one.size() <= two.size()){
         lower = one.size();
-    } 
+    }
     else lower = two.size();
     return lower;
 }
@@ -39,7 +39,7 @@ void createfile(vector<string> pieces, int edgeParam){
             if (i != j && match(pieces[i], pieces[j], edgeParam)){
                 aux10 += 1;
                 edges.push_back(pieces[i]);
-                edges.push_back(pieces[j]);
+                edges.push_back(pieces[j].substr(edgeParam));
             }
         }
     }

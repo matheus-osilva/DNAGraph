@@ -2,9 +2,9 @@
 
 template<typename T>
 T random(T range_from, T range_to) {
-    std::random_device                  rand_dev;
-    std::mt19937                        generator(rand_dev());
-    std::uniform_int_distribution<T>    distr(range_from, range_to);
+    static std::random_device rand_dev;
+    static std::mt19937 generator(rand_dev());
+    std::uniform_int_distribution<T> distr(range_from, range_to);
     return distr(generator);
 }
 
@@ -18,12 +18,15 @@ std::vector<std::string> splitdna(std::string sequence, int N, int B, int E){
     while (splited.size() != N)
     {
         psize = random(B, E);
+        std::cout << psize << std::endl;
         minIndex = sequence.size() - psize;
         index = random(0, minIndex);
+        std::cout << index << std::endl;
         /*if (std::find(splited.begin(), splited.end(), sequence.substr(index, psize)) == splited.end()){
             splited.push_back(sequence.substr(index, psize));
             std::cout << sequence.substr(index, psize) << std::endl;
         }*/
+        std::cout << sequence.substr(index, psize) << std::endl;
         splited.push_back(sequence.substr(index, psize));
         
     }

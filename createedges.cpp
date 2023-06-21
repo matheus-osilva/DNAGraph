@@ -39,7 +39,7 @@ void createfile(vector<string> pieces, int edgeParam){
             if (i != j && match(pieces[i], pieces[j], edgeParam)){
                 aux10 += 1;
                 edges.push_back(pieces[i]);
-                edges.push_back(pieces[j].substr(edgeParam));
+                edges.push_back(pieces[j]);
             }
         }
     }

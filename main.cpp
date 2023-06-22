@@ -12,7 +12,7 @@ int main()
     vector<string> pieces;
     int numPieces, minSize, maxSize, edgeParam;
     /*cout << "Enter the DNA sequence: " << endl;
-    cin >> sequence;*/
+    cin >> sequence;
     cout << "Enter the number of pieces the sequence will be splitted: " << endl;
     cin >> numPieces;
     cout << "Enter the minimum size of each piece: " << endl;
@@ -20,7 +20,11 @@ int main()
     cout << "Enter the maximum size of each piece: " << endl;
     cin >> maxSize;
     cout << "Enter the parameter to build the edges (k): " << endl;
-    cin >> edgeParam;
+    cin >> edgeParam;*/
+    numPieces = 12;
+    minSize = 4;
+    maxSize = 6;
+    edgeParam = 2;
 
     sequence = "ACTCGTAAATACATAACGATAC";
     pieces = splitdna(sequence, numPieces, minSize, maxSize);
@@ -53,6 +57,15 @@ int main()
             cont++;
         }
     }
+    for (int i = 0; i < longestPaths.size(); i++)
+    {
+        for (int j = 0; j < longestPaths[i].size(); j++)
+        {
+            std::cout << longestPaths[i][j] << "->";
+        }
+        std::cout << std::endl;
+    }
+    
 
     vector<vector<string>> stringPaths;
     stringPaths.reserve(longestPaths.size());
@@ -62,7 +75,7 @@ int main()
 
     for (const auto& path : stringPaths) {
         for (const auto& piece : path) {
-            cout << piece;
+            cout << piece << "/";
         }
         cout << endl << "-----------------------------------------------------" << endl;
     }

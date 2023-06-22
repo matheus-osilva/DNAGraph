@@ -8,20 +8,21 @@ SymbolGraph::SymbolGraph(const std::string& stream, const std::string& sp) {
     while (std::getline(inputFile, line)) {
         std::istringstream iss(line);
         std::string word;
-
         while (std::getline(iss, word, sp[0])) {
-            if (st.find(word) == st.end()) // if the word is not in the map
-                st[word] = st.size(); // associate it with a new index
+            if (st.find(word) == st.end()){ // if the word is not in the map
+                st[word] = st.size() - 1; // associate it with a new index
+            }
         }
     }
-
     keys.resize(st.size());
 
     // Inverted index to get string keys as an array
-    for (const auto& entry : st) {
-        keys[entry.second] = entry.first;
+    for (auto& entry : st) {
+        //std::cout << "first: " << entry.first << "  second: " << entry.second << std::endl;
+        keys[entry.second].append(entry.first);
+        //keys.insert(keys.begin() + entry.second, entry.first);
+        //std::cout << keys[0] << std::endl;
     }
-
     G = Digraph(st.size());
 
     // Second pass: builds the graph

@@ -7,6 +7,7 @@
 #include <vector>
 #include <fstream>
 #include <sstream>
+#include <typeinfo>
 #include "Digraph.h"
 
 class SymbolGraph {

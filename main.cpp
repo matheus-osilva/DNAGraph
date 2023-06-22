@@ -8,123 +8,101 @@ using namespace std;
 
 int main()
 {
-    string sequence;
-    vector<string> pieces;
-    int numPieces, minSize, maxSize, edgeParam;
-    /*cout << "Enter the DNA sequence: " << endl;
-    cin >> sequence;
-    cout << "Enter the number of pieces the sequence will be splitted: " << endl;
-    cin >> numPieces;
-    cout << "Enter the minimum size of each piece: " << endl;
-    cin >> minSize;
-    cout << "Enter the maximum size of each piece: " << endl;
-    cin >> maxSize;
-    cout << "Enter the parameter to build the edges (k): " << endl;
-    cin >> edgeParam;*/
-    numPieces = 12;
-    minSize = 4;
-    maxSize = 6;
-    edgeParam = 2;
-
-    sequence = "ACTCGTAAATACATAACGATAC";
-    pieces = splitdna(sequence, numPieces, minSize, maxSize);
-    createfile(pieces, edgeParam);
-    SymbolGraph sgraph = SymbolGraph("edges.txt", " ");
-    Digraph graph = sgraph.getGraph();
-    int counter = 1;
-    for (int v = 0; v < graph.getV(); v++) {
-        for (int w : graph.getadj(v)) {
-            if(graph.isEdgeInCircuit(v, w)) {
-                graph.removeEdge(v, w);
-            }
-            counter++;
-        }
-    }
-    sgraph.print();
-    graph.print();
-    vector<vector<int>> longestPaths;
-    longestPaths.push_back(graph.longestPath(0));
-    int cont = 0;
-
-    for (int v = 1; v < graph.getV(); v++) {
-        vector<int> path = graph.longestPath(v);
-        if (path.size() > longestPaths[cont].size()) {
-            longestPaths.clear();
-            longestPaths.push_back(path);
-            cont = 0;
-        } else if (path.size() == longestPaths[cont].size()) {
-            longestPaths.push_back(path);
-            cont++;
-        }
-    }
-    for (int i = 0; i < longestPaths.size(); i++)
-    {
-        for (int j = 0; j < longestPaths[i].size(); j++)
+    cout << "Bem-vindo ao simulador de sequenciamento genetico!" << endl;
+    cout << "Feito por Matheus Oliveira da Silva, num USP 13696262" << endl;
+    cout << "Algoritmos e Estrutura de Dados Exercicio Programa 3" << endl;
+    cout << "Essa simulacao contem dois modos:" << endl;
+    cout << "Modo 1 - O parametro k para a construcao dos arcos compara todos os valores maiores e iguais ao seu valor" << endl;
+    cout << "Modo 2 - O parametro k para a construcao dos arcos compara somente o seu valor (melhor para numero de pedacos pequenos)" << endl;
+    while(true){
+        string sequence;
+        vector<string> pieces;
+        int numPieces, minSize, maxSize, edgeParam, mode = 10;
+        while (mode != 1 && mode != 2)
         {
-            std::cout << longestPaths[i][j] << "->";
+            cout << "Escolha o modo de simulacao (1 ou 2): " << endl;
+            cin >>  mode;
         }
-        std::cout << std::endl;
-    }
-    
-
-    vector<vector<string>> stringPaths;
-    stringPaths.reserve(longestPaths.size());
-    for (const auto& longestPath : longestPaths) {
-        stringPaths.push_back(sgraph.mapIntToString(longestPath));
-    }
-
-    for (const auto& path : stringPaths) {
-        for (const auto& piece : path) {
-            cout << piece << "/";
+        cout << "Insira a sequencia do DNA (insira sair para encerrar o programa): " << endl;
+        cin >> sequence;
+        if (sequence == "sair") break;
+        cout << "Insira o numero de pedacos que a sequencia sera dividida: " << endl;
+        cin >> numPieces;
+        cout << "Insira o tamanho minimo de cada pedaco: " << endl;
+        cin >> minSize;
+        cout << "Insira o tamanho maximo de cada pedaco: " << endl;
+        cin >> maxSize;
+        cout << "Insira o parametro de construcao dos arcos (k): " << endl;
+        cin >> edgeParam;
+        pieces = splitdna(sequence, numPieces, minSize, maxSize);
+        createfile(pieces, edgeParam, mode);
+        SymbolGraph sgraph = SymbolGraph("edges.txt", " ");
+        Digraph graph = sgraph.getGraph();
+        int counter = 1;
+        for (int v = 0; v < graph.getV(); v++) {
+            for (int w : graph.getadj(v)) {
+                if(graph.isEdgeInCircuit(v, w)) {
+                    graph.removeEdge(v, w);
+                }
+                counter++;
+            }
         }
-        cout << endl << "-----------------------------------------------------" << endl;
-    }
+        sgraph.print();
+        graph.print();
+        vector<vector<int>> longestPaths;
+        longestPaths.push_back(graph.longestPath(0));
+        int cont = 0;
 
-    /*
-    string myText;
-    string myWord;
-    int numVertices, numEdges;
-    numVertices = numPieces;
-    ifstream MyReadFile("edges.txt");
-    getline(MyReadFile, myText);
-    myWord = myText.substr(myText.find(" "), myText.find("/") - 1);
-    numEdges = stoi(myWord);
+        for (int v = 1; v < graph.getV(); v++) {
+            vector<int> path = graph.longestPath(v);
+            if (path.size() > longestPaths[cont].size()) {
+                longestPaths.clear();
+                longestPaths.push_back(path);
+                cont = 0;
+            } else if (path.size() == longestPaths[cont].size()) {
+                longestPaths.push_back(path);
+                cont++;
+            }
+        }
+        for (int i = 0; i < longestPaths.size(); i++)
+        {
+            for (int j = 0; j < longestPaths[i].size(); j++)
+            {
+                std::cout << longestPaths[i][j] << "->";
+            }
+            std::cout << std::endl;
+        }
+        
 
-    //initialize empty graph for our vertices
-    graph g(numVertices);
-    for (int i = 0; i < numVertices; i++)
-    {
-        g[pieces[i]].clear();
+        vector<vector<string>> stringPaths;
+        stringPaths.reserve(longestPaths.size());
+        for (const auto& longestPath : longestPaths) {
+            stringPaths.push_back(sgraph.mapIntToString(longestPath));
+        }
+        if (mode == 2){
+            for (const auto& path : stringPaths)
+            {
+                for (const auto& piece : path)
+                {
+                    cout << piece.substr(0, piece.size() - edgeParam);
+                }
+                cout << endl;
+            }
+            
+        }
+        else {
+            for (const auto& path : stringPaths) {
+                for (auto it = path.begin(); it != path.end(); ++it) {
+                    const auto& piece = *it;
+                    if (it != path.end() - 1) {
+                        cout << removeSuffixIfMatched(piece, *(it + 1), edgeParam);
+                    } else {
+                        cout << piece;
+                    }
+                }
+                cout << endl;
+            }
+        }
     }
-    
-    
-    vertex source, dest;
-    
-
-    //add edges and create vertices as needed  
-    for (int i = 0; i < numEdges; i++) {
-        getline(MyReadFile, myText);
-        source = myText.substr(0, myText.find(" "));
-        dest = myText.substr(myText.find(" ") + 1, myText.find("\n"));
-        add_edge(g, source, dest);
-    }
-    */
-   /* cout << "The Adjacency List is:" << endl;
-    print_graph(g);*/
-      
-    /*
-    cout << "Enter the start vertex" << endl;
-    cin >> source;
-      
-    cout << "Enter the end vertex" << endl;
-    cin >> dest;
-    
-    path p = find_path(g, source, dest);
-    
-    print_path(p);
-    */
-   
-   /* checkEdgesInCircuit(g);
-    print_graph(g);*/
     return 0;
 }

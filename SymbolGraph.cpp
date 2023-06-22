@@ -59,12 +59,12 @@ Digraph SymbolGraph::getGraph() {
     return G;
 }
 void SymbolGraph::print() {
-    std::cout << "Index Map:\n";
+    std::cout << "Mapa de indices:\n";
     for (const auto& entry : st) {
         std::cout << entry.first << " -> " << entry.second << "\n";
     }
 
-    std::cout << "\nKeys:\n";
+    std::cout << "\nChaves:\n";
     for (int i = 0; i < keys.size(); i++) {
         std::cout << i << " -> " << keys[i] << "\n";
     }
@@ -77,9 +77,3 @@ for (int v : intVector) {
     }
     return stringVector;
 }
-/*void SymbolGraph::removeCycles() {
-    Digraph G = getGraph();
-    for (int v = 0; v < G.getV(); ++v) {
-        DirectedCycle dc = DirectedCycle(G, v);
-    }
-}*/

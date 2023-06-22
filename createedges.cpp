@@ -27,20 +27,47 @@ bool match(string one, string two, int edgeParam){
     return false;
 }
 
-void createfile(vector<string> pieces, int edgeParam){
+bool match2(string one, string two, int edgeParam){
+    int i2 = one.size() - edgeParam;
+    if (one.substr(i2, string::npos) == two.substr(0, edgeParam)) return true;
+    return false;
+}
+
+string removeSuffixIfMatched(string one, const string& two, int edgeParam) {
+    int lower = lowerSize(one, two);
+    int i = one.size() - lower;
+    int j = lower;
+    while (i <= one.size() - 1 && j >= edgeParam) {
+        if (one.substr(i) == two.substr(0, j)) {
+            return one.substr(0, i);  // Return one with the suffix removed
+        }
+        i += 1;
+        j -= 1;
+    }
+    return one;  // No match found, return the original string one
+}
+
+void createfile(vector<string> pieces, int edgeParam, int mode){
     string text;
     stringstream aux;
     string aux2;
-    int aux10 = 0;
     int numVertices = pieces.size();
     vector<string> edges; // Index of edge connections 0 -> 1, 2 -> 3, 4 -> 5 ...
     for (int i = 0; i < numVertices; ++i){
         for (int j = 0; j < numVertices; ++j){
-            if (i != j && match(pieces[i], pieces[j], edgeParam)){
-                aux10 += 1;
-                edges.push_back(pieces[i]);
-                edges.push_back(pieces[j]);
+            if (mode == 1) {
+                if (i != j && match(pieces[i], pieces[j], edgeParam)){
+                    edges.push_back(pieces[i]);
+                    edges.push_back(pieces[j]);
+                }
             }
+            else {
+                if (i != j && match2(pieces[i], pieces[j], edgeParam)){
+                    edges.push_back(pieces[i]);
+                    edges.push_back(pieces[j]);
+                }
+            }
+            
         }
     }
     aux << numVertices;

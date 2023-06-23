@@ -27,11 +27,6 @@ bool match(string one, string two, int edgeParam){
     return false;
 }
 
-bool match2(string one, string two, int edgeParam){
-    int i2 = one.size() - edgeParam;
-    if (one.substr(i2, string::npos) == two.substr(0, edgeParam)) return true;
-    return false;
-}
 
 string removeSuffixIfMatched(string one, const string& two, int edgeParam) {
     int lower = lowerSize(one, two);
@@ -47,7 +42,7 @@ string removeSuffixIfMatched(string one, const string& two, int edgeParam) {
     return one;  // No match found, return the original string one
 }
 
-void createfile(vector<string> pieces, int edgeParam, int mode){
+void createfile(vector<string> pieces, int edgeParam){
     string text;
     stringstream aux;
     string aux2;
@@ -55,17 +50,9 @@ void createfile(vector<string> pieces, int edgeParam, int mode){
     vector<string> edges; // Index of edge connections 0 -> 1, 2 -> 3, 4 -> 5 ...
     for (int i = 0; i < numVertices; ++i){
         for (int j = 0; j < numVertices; ++j){
-            if (mode == 1) {
-                if (i != j && match(pieces[i], pieces[j], edgeParam)){
-                    edges.push_back(pieces[i]);
-                    edges.push_back(pieces[j]);
-                }
-            }
-            else {
-                if (i != j && match2(pieces[i], pieces[j], edgeParam)){
-                    edges.push_back(pieces[i]);
-                    edges.push_back(pieces[j]);
-                }
+            if (i != j && match(pieces[i], pieces[j], edgeParam)){
+                edges.push_back(pieces[i]);
+                edges.push_back(pieces[j]);
             }
             
         }

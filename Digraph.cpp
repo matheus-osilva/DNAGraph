@@ -46,14 +46,16 @@ Digraph Digraph::reverse() {
 }
 
 void Digraph::print() {
-    std::cout << "Vertices:\n";
+    std::cout << "Vertices e suas conexoes:\n";
     for (int v = 0; v < V; v++) {
         std::cout << v << ": ";
         for (int w : adj[v]) {
             std::cout << w << " ";
         }
         std::cout << "\n";
+        std::cout << "\n";
     }
+    std::cout << "----------------" << std::endl;
 }
 
 bool Digraph::isEdgeInCircuit(int u, int v) {
